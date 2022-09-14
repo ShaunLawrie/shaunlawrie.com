@@ -4,35 +4,41 @@
         <title>Shaun Lawrie was here</title>
         <meta name="color-scheme" content="dark light">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="styles/main.css">
-        <script>
-            let template = "hsl(_HUE_, _SATURATION_, _LIGHTNESS_)"
-            let s = getComputedStyle(document.documentElement).getPropertyValue('--theme-base-saturation')
-            let l = getComputedStyle(document.documentElement).getPropertyValue('--theme-base-lightness')
-            let r = parseInt(Math.random() * 360)
-            document.documentElement.style.setProperty('--theme-tint-color',
-                "hsl(_HUE_, _SATURATION_, _LIGHTNESS_)"
-                    .replace("_HUE_", r)
-                    .replace("_SATURATION_", s)
-                    .replace("_LIGHTNESS_", l)
-            )
-            document.documentElement.style.setProperty('--theme-tint-color-fade',
-                "hsla(_HUE_, _SATURATION_, _LIGHTNESS_, 0.2)"
-                    .replace("_HUE_", r)
-                    .replace("_SATURATION_", s)
-                    .replace("_LIGHTNESS_", l)
-            )
-            document.documentElement.style.setProperty('--theme-mono-hue-rotation', `${r}deg`)
-        </script>
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="icon" type="image/png" href="/blog/tictactobol/thumb.png" />
+        <script src="/scripts/main.js"></script>
     </head>
     <body>
+        <div id="socials">
+            <a href="https://github.com/ShaunLawrie"><img class="mono-img" src="/images/github.png" alt="github logo" /></a>
+            <a href="https://www.linkedin.com/in/shaunlawrie"><img class="mono-img" src="/images/linkedin.png" alt="linkedin logo" /></a>
+        </div>
         <h1>Welcome</h1>
         <p>
-            Hi I'm Shaun Lawrie. I'm an IT professional working as a bit of an all-around problem solver.
+            Hi I'm Shaun Lawrie. I'm an IT professional working as a bit of an all-around problem solver. Here's some of my random thoughts and side-projects.
         </p>
         <article>
-            <h1>Articles</h1>
-            <p>Nothing yet...</p>
+            <ul>
+                <li>
+                    <img class="left-thumb pixelated" src="blog/pwshsprites/thumb.jpg" alt="terminal rendering a pixel art powershell logo" />
+                    <h2><a href="blog/pwshsprites/index.html">Generating pixel sprites in PowerShell</a></h2>
+                    <p>While procrastinating about setting up this blog I wanted to create a favicon in a pixel art style. Instead of creating the icon I got carried away spaghetti coding a pixel art editor for the terminal in PowerShell...</p>
+                </li>
+                <li>
+                    <img class="left-thumb pixelated" src="blog/aws/thumb.png" alt="pixelated aws certifications" />
+                    <h2><a href="blog/aws/index.html">AWS Professional Certifications</a></h2>
+                    <p>I decided to sign up for the AWS Solutions Architect Professional, DevOps Professional and Security Specialist exams to occur over the course of two weeks and had to cram quite a bit to study. I've posted my results and study materials here.</p>
+                </li>
+                <li>
+                    <img class="left-thumb pixelated" src="blog/tictactobol/thumb.png" alt="screenshot of tic tac toe running on cobol" />
+                    <h2><a href="blog/tictactobol/index.html">Tic-Tac-Toe in COBOL</a></h2>
+                    <p>A few years ago I wrote a small game in COBOL to get to know the language.</p>
+                </li>
+            </ul>
         </article>
+        <footer>
+            <marquee>This site is pretty unfinished right now but I needed to get something deployed to motivate me to start publishing more stuff.</marquee>
+            <img onclick="disco()" id="construction" src="/images/construction.gif" alt="under construction gif" />
+        </footer>
     </body>
 </html>

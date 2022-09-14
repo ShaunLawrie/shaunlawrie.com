@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shaun Lawrie - PwshSprites</title>
+        <meta name="color-scheme" content="dark light">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="icon" type="image/png" href="/blog/tictactobol/thumb.png" />
+        <script src="/scripts/main.js"></script>
+        <style>
+            #editor {
+                width: 50rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="socials">
+            <a href="https://github.com/ShaunLawrie"><img class="mono-img" src="/images/github.png" alt="github logo" /></a>
+            <a href="https://www.linkedin.com/in/shaunlawrie"><img class="mono-img" src="/images/linkedin.png" alt="linkedin logo" /></a>
+        </div>
+        <article>
+            <h1>
+                PwshSprites
+            </h1>
+            <p>
+                <a class="homelink" href="/">&#129044; Home</a>
+            </p>
+            <p>
+                While procrastinating about setting up this blog I wanted to create a favicon in a pixel art style. Instead of creating the icon I got carried away spaghetti coding a pixel art editor for the terminal in PowerShell...
+            </p>
+            <p>
+                The code is available on GitHub <a href="https://github.com/ShaunLawrie/PwshSprites">https://github.com/ShaunLawrie/PwshSprites</a>
+            </p>
+            <p>To open the editor run <code>./PwshEditor.ps1</code></p>
+            <p>The editor controls are all indicated in the UI apart from pressing [SPACE] to draw pixels and arrow keys to move. Snake mode will make the pen or eraser constantly apply changes as you navigate the canvas.
+            <div class="centered">
+                <img id="editor" src="editor.png" alt="an image of the powershell sprite editor" />
+            </div>
+            <p>To open the viewer run <code>./PwshViewer.ps1</code></p>
+            <p>This will start a PowerShell web server and open a page showing all of the images in the sprites folder. There is a problem with ctrl-c being caught in the terminal so sometimes you need to close the window to stop the web server. I think using a background job would stop this occurring but I haven't tried it yet.</p>
+            <div class="centered">
+                <img src="viewer.png" alt="an image of the powershell sprite viewer" />
+            </div>
+            <p>
+                <a class="homelink" href="/">&#129044; Home</a>
+            </p>
+        </article>
+    </body>
+</html>
