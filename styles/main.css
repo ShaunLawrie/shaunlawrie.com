@@ -1,0 +1,47 @@
+:root {
+    font-size: 10px;
+    --theme-base-saturation: 30%;
+    --theme-base-lightness: 90%;
+    --theme-tint-color: hsl(69, var(--theme-base-saturation), var(--theme-base-lightness));
+    --theme-tint-color-fade: hsla(69, var(--theme-base-saturation), var(--theme-base-lightness), 0.2);
+    --theme-foreground-color: #222222;
+    --theme-background-color: var(--theme-tint-color);
+    --theme-mono-hue-rotation: 0;
+    --theme-img-filter: sepia(100) hue-rotate(--theme-mono-hue-rotation);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --theme-foreground-color: var(--theme-tint-color);
+        --theme-background-color: #222222;
+        --theme-img-filter: sepia(0.5) invert(1) hue-rotate(var(--theme-mono-hue-rotation) saturate(1));
+    }
+}
+
+html {
+    background-color: var(--theme-background-color);
+}
+body {
+    font-size: 2rem;
+    font-weight: 100!important;
+    max-width: 80em;
+    padding: 2rem;
+    margin: 0 auto 0 auto;
+    color: var(--theme-foreground-color);
+    font-family: "Baskerville", "sans-serif";
+}
+h1 {
+    font-size: 2.5em;
+    font-weight: normal;
+    margin: 0em 0 1rem 0;
+}
+p a {
+    color: var(--theme-foreground-color);
+    filter: saturate(7);
+}
+p {
+    margin-left: 1.6rem;
+}
+.mono-img {
+    filter: var(--theme-img-filter);
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shaun Lawrie was here</title>
+        <meta name="color-scheme" content="dark light">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles/main.css">
+        <script>
+            let template = "hsl(_HUE_, _SATURATION_, _LIGHTNESS_)"
+            let s = getComputedStyle(document.documentElement).getPropertyValue('--theme-base-saturation')
+            let l = getComputedStyle(document.documentElement).getPropertyValue('--theme-base-lightness')
+            let r = parseInt(Math.random() * 360)
+            document.documentElement.style.setProperty('--theme-tint-color',
+                "hsl(_HUE_, _SATURATION_, _LIGHTNESS_)"
+                    .replace("_HUE_", r)
+                    .replace("_SATURATION_", s)
+                    .replace("_LIGHTNESS_", l)
+            )
+            document.documentElement.style.setProperty('--theme-tint-color-fade',
+                "hsla(_HUE_, _SATURATION_, _LIGHTNESS_, 0.2)"
+                    .replace("_HUE_", r)
+                    .replace("_SATURATION_", s)
+                    .replace("_LIGHTNESS_", l)
+            )
+            document.documentElement.style.setProperty('--theme-mono-hue-rotation', `${r}deg`)
+        </script>
+    </head>
+    <body>
+        <h1>Welcome</h1>
+        <p>
+            Hi I'm Shaun Lawrie. I'm an IT professional working as a bit of an all-around problem solver.
+        </p>
+        <div id="socials">
+            <a href="https://github.com/ShaunLawrie"><img class="mono-img" src="images/github.png" /></a>
+        </div>
+        <article>
+            <h1>Articles</h1>
+            <p>Nothing yet...</p>
+        </article>
+    </body>
+</html>
