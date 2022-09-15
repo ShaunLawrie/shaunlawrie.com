@@ -23,5 +23,3 @@ function disco() {
     console.log("party time")
     setInterval(colorRotate, 20)
 }
-
-colorRotate()

@@ -8,8 +8,70 @@
         <link rel="icon" type="image/png" href="/blog/tictactobol/thumb.png" />
         <script src="/scripts/main.js"></script>
         <style>
-            #editor {
-                width: 50rem;
+            .bar {
+                height: 3.5rem;
+                border-radius: 10rem;
+                background: rgba(0, 0, 0, 0.5);
+                margin: 0.3rem;
+                box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 5px;
+            }
+            .bar:hover {
+                filter: none;
+                box-shadow: rgba(0, 0, 0, 0.0) 2px 2px 5px;
+            }
+            #timeline div {
+                font-size: 1.2rem;
+                flex-grow: 2;
+                padding-left: 0.8rem;
+            }
+            .flexcontainer {
+                width: 100%;
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: flex-end;
+                justify-content: flex-end;
+            }
+            .icon {
+                margin: 0.6rem 0 0.5rem 1rem;
+                height: 2.4rem;
+            }
+            #rackspace {
+                background: linear-gradient(to right, #ffffff, #ffd2d2);
+                flex-grow: 2;
+            }
+            #aws {
+                background: linear-gradient(to right, #ffffff, #fddac3);
+                flex-grow: 7;
+            }
+            #gcp {
+                background: linear-gradient(to right, #ffffff, #b9b9b9);
+                width: 37.5%;
+            }
+            #azure {
+                background: linear-gradient(to right, #ffffff, #b0d0ff);
+                width: 12.5%;
+            }
+            #notes {
+                text-align: center;
+            }
+            #badges {
+                float: right;
+            }
+            #badges img {
+                width: 12rem;
+                margin: 0.2em;
+            }
+            #notes img {
+                border-radius: 6px;
+                box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+                width: 10em;
+                margin: 2em;
+            }
+            #notes a:hover {
+                filter: brightness(120%);
+            }
+            #study-notes-heading {
+                margin-top: -4.8rem;
             }
         </style>
     </head>
@@ -20,19 +82,63 @@
         </div>
         <article>
             <h1>
-                AWS Certifications
+                AWS Professional Certifications
             </h1>
             <p>
-                <a class="homelink" href="/">&#129044; Home</a>
+                &#129044; <a class="homelink" href="/">Home</a>
             </p>
             <p>
-                I decided to sign up for the AWS Solutions Architect Professional, DevOps Professional and Security Specialist exams to occur over the course of two weeks and had to cram quite a bit to study. I've posted my results and study materials here.
+                I decided to sign up for the AWS Solutions Architect Professional, DevOps Professional and Security Specialist exams to occur over the course of two weeks and had to cram quite a bit to pass.
             </p>
             <p>
-                I have to grab my notes from another PC...
+                I've posted my results and study materials here in case it helps anyone.
             </p>
+            <h2>Cloud Timeline</h2>
             <p>
-                <a class="homelink" href="/">&#129044; Home</a>
+                Prior to trying this I've spent a long time with my head in the clouds but I'd say I've only really gotten more involved in infrastructure configuration and provisioning in the last 4 years.
+            </p>
+            <div id="timelinespacer">
+                <div id="timeline" class="flexcontainer">
+                    <div>2015</div>
+                    <div>2016</div>
+                    <div>2017</div>
+                    <div>2018</div>
+                    <div>2019</div>
+                    <div>2020</div>
+                    <div>2021</div>
+                    <div>2022</div>
+                </div>
+            </div>
+            <div id="row1" class="flexcontainer">
+                <div id="rackspace" href="#rackspace-inline" class="bar"><img class="icon" src="rackspace.png" /></div>
+                <div id="aws" href="#aws-inline" class="bar"><img class="icon" src="aws.png" /></div>
+            </div>
+            <div id="row2" class="flexcontainer">
+                <div id="gcp" href="#gcp-inline" class="bar"><img class="icon" src="gcp.png" /></div>
+            </div>
+            <div id="row3" class="flexcontainer">
+                <div id="azure" href="#azure-inline" class="bar"><img class="icon" src="azure.png" /></div>
+            </div>
+            <h2 id="study-notes-heading">Study Notes</h2>
+            
+            <h3>Practical</h3>
+            <p>Without doing any practical work and just studying definitions and documentation it doesn't really stick for me so while reading docs for anything I hadn't already used I fired everything up for a quick run around on my personal AWS account.</p>
+            <p>
+                <ul class="styled-list">
+                    <li><a href="https://github.com/ShaunLawrie/PwshRayTracerLambda">I updated my crappy PowerShell Ray Tracer I had been working on to run on Lambda</a> deploying the infrastructure via Terraform. This was a mistake because for the purposes of studying I should have used Cloudformation but I really dislike it 😅</li>
+                    <li><a href="https://example.com">I moved one of my old projects to the AWS Code* family of tools</a> to get familiar with all the CodeCommit/Build/Deploy/Pipeline tooling in AWS</li>
+                </ul>
+            </p>
+
+            <h3>PDFs</h3>
+            <p>Here are my study notes from the exams. They have sanitised results and some afterthoughts I recorded after walking out of the exam room. Some people got results immediately but I had to wait ~9 hours to receive the email from Credly saying my results had been processed.</p>
+            <div id="notes">
+                <a href="DevOps Professional Study.pdf" target="_blank"><img src="devopsstudy.png" /></a>
+                <a href="Solutions Architect Professional Study.pdf" target="_blank"><img src="solutionsarchitectstudy.png" /></a>
+                <a href="Security Specialty Study.pdf" target="_blank"><img src="securitystudy.png" /></a>
+            </div>
+            <p>
+                &#129044; <a class="homelink" href="/">Home</a>
             </p>
         </article>
     </body>

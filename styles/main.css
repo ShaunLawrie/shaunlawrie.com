@@ -1,20 +1,23 @@
 :root {
     font-size: 10px;
-    --theme-base-saturation: 80%;
-    --theme-base-lightness: 90%;
-    --theme-tint-color: hsl(69, var(--theme-base-saturation), var(--theme-base-lightness));
-    --theme-tint-color-fade: hsla(69, var(--theme-base-saturation), var(--theme-base-lightness), 0.2);
+    --theme-base-saturation: 30%;
+    --theme-heavy-saturation: 45%;
+    --theme-base-lightness: 92%;
+    --theme-heavy-lightness: 88%;
+    --theme-tint-color: hsl(230, var(--theme-base-saturation), var(--theme-base-lightness));
+    --theme-tint-color-fade: hsla(230, var(--theme-base-saturation), 20%, 0.7);
     --theme-foreground-color: #222222;
     --theme-background-color: var(--theme-tint-color);
-    --theme-mono-hue-rotation: 349deg;
-    --theme-img-filter: invert(1);
+    --theme-mono-hue-rotation: 160deg;
+    --theme-img-filter: sepia(60%) brightness(25%) hue-rotate(var(--theme-mono-hue-rotation)) saturate(500%);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         --theme-foreground-color: var(--theme-tint-color);
         --theme-background-color: #222222;
-        --theme-img-filter: sepia(50%) brightness(95%) hue-rotate(var(--theme-mono-hue-rotation)) saturate(1000%);
+        --theme-img-filter: sepia(40%) brightness(75%) hue-rotate(var(--theme-mono-hue-rotation)) saturate(50%);
+        --theme-tint-color-fade: hsla(230, var(--theme-heavy-saturation), var(--theme-heavy-lightness), 0.7);
     }
 }
 
@@ -29,7 +32,7 @@ body {
     padding: 2rem 4rem 2rem 4rem;
     margin: 0 auto 0 auto;
     color: var(--theme-foreground-color);
-    font-family: "Baskerville", "sans-serif";
+    font-family: 'Times New Roman', Times, serif;
 }
 
 h1 {
@@ -91,8 +94,7 @@ ul h2 {
 }
 
 code {
-    color: var(--theme-foreground-color);
-    filter: brightness(250%);
+    color: var(--theme-background-color);
     font-size: 1.7rem;
     border-radius: 0.3rem;
     background: var(--theme-tint-color-fade);
@@ -124,6 +126,11 @@ img {
     text-align: center;
 }
 
-.homelink {
-    text-decoration: none;
+.styled-list {
+    padding-left: 3rem;
+    list-style-type: disc;
+}
+
+.styled-list li {
+    margin-top: 1.5rem;
 }
