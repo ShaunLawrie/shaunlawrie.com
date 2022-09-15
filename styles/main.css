@@ -10,6 +10,7 @@
     --theme-background-color: var(--theme-tint-color);
     --theme-mono-hue-rotation: 160deg;
     --theme-img-filter: sepia(60%) brightness(25%) hue-rotate(var(--theme-mono-hue-rotation)) saturate(500%);
+    --theme-dim: brightness(450%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,6 +19,7 @@
         --theme-background-color: #222222;
         --theme-img-filter: sepia(40%) brightness(75%) hue-rotate(var(--theme-mono-hue-rotation)) saturate(50%);
         --theme-tint-color-fade: hsla(230, var(--theme-heavy-saturation), var(--theme-heavy-lightness), 0.7);
+        --theme-dim: brightness(0.4);
     }
 }
 
@@ -39,6 +41,13 @@ h1 {
     font-size: 4.5rem;
     margin: 0rem 0 1rem -1.4rem;
 }
+
+@media screen and (max-width: 75rem) {
+    h1 {
+        margin: 0rem 0 1rem 0;
+    }
+}
+
 h1, h2, h3, h4, h5 {
     font-weight: normal;
 }
@@ -133,4 +142,12 @@ img {
 
 .styled-list li {
     margin-top: 1.5rem;
+}
+
+.date-footer {
+    filter: var(--theme-dim);
+    display: block;
+    float: right;
+    font-size: 1.3rem;
+    margin-top: 0.1rem;
 }
