@@ -11,11 +11,13 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --theme-primary-color: rgb(163, 59, 223);
+        --theme-primary-color: rgb(211, 134, 248);
+        --theme-primary-color-image: rgb(37, 22, 74);
+        --theme-primary-color-bright: rgb(222, 150, 255);
         --theme-link-color: var(--theme-foreground-color);
         --theme-foreground-color: #ffffff;
         --theme-dim-foreground-color: #666666;
-        --theme-background-color: #222222;
+        --theme-background-color: rgb(9, 16, 34);
         --theme-primary-background-color: rgba(0, 0, 0, 0.2);
         --theme-social-color-filter: sepia(1) brightness(0.4) hue-rotate(207deg) saturate(1800%);
     }
@@ -45,8 +47,12 @@ h1, h2, h3, h4, h5 {
     font-weight: normal;
 }
 
+article {
+    clear: both;
+}
+
 p a, ul a {
-    text-decoration-color: var(--theme-primary-color);
+    text-decoration-color: var(--theme-primary-color-bright);
     text-decoration-thickness: 1px;
     color: var(--theme-link-color);
 }
@@ -109,6 +115,7 @@ ul li p {
     height: 8rem;
     width: 8rem;
     margin: 0.5rem 2rem 0.5rem 0;
+    background-color: var(--theme-primary-color-image);
 }
 
 code {
@@ -164,4 +171,9 @@ img {
 
 #interests  {
     color: var(--theme-dim-foreground-color);
+}
+
+hr {
+    border: solid 1px var(--theme-primary-color);
+    border-style: solid none none none;
 }
