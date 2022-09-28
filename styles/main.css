@@ -1,11 +1,14 @@
 :root {
     font-size: 10px;
     --theme-primary-color: rgb(97, 0, 177);
+    --theme-primary-color-image: rgba(97, 0, 177, 0.813);
+    --theme-primary-color-bright: rgb(97, 0, 177);
     --theme-link-color: var(--theme-primary-color);
     --theme-foreground-color: #222222;
-    --theme-dim-foreground-color: #888888;
-    --theme-background-color: #d5c8dd;
+    --theme-dim-foreground-color: #7c7c7c;
+    --theme-background-color: #e6d9ed;
     --theme-primary-background-color: rgba(255, 255, 255, 0.3);
+    --theme-primary-background-color-bright: rgba(97, 0, 177, 0.203);
     --theme-social-color-filter: sepia(1) brightness(0.35) hue-rotate(207deg) saturate(1900%);
 }
 
@@ -19,6 +22,7 @@
         --theme-dim-foreground-color: #666666;
         --theme-background-color: rgb(9, 16, 34);
         --theme-primary-background-color: rgba(0, 0, 0, 0.7);
+        --theme-primary-background-color-bright: rgba(156, 101, 181, 0.3);
         --theme-social-color-filter: sepia(1) brightness(0.4) hue-rotate(207deg) saturate(1800%);
     }
 }
@@ -124,6 +128,16 @@ code, pre {
     border-radius: 0.3rem;
     background: var(--theme-primary-background-color);
     padding: 0 0.3rem 0.1rem 0.3rem;
+}
+
+.highlight {
+    border-radius: 4px;
+    padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+    background-color: var(--theme-primary-background-color-bright);
+}
+
+pre {
+    overflow: auto;
 }
 
 #construction {
