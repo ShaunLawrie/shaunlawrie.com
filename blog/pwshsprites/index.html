@@ -13,7 +13,12 @@
                 justify-content: space-around;
             }
             #editor-container img {
-                width: 45%;
+                width: 28%;
+            }
+            #editor-container video {
+                position: relative;
+                top: 0.4rem;
+                width: 28%;
             }
         </style>
     </head>
@@ -36,6 +41,10 @@
             <div id="editor-container">
                 <img src="editor1.png" alt="an image of some aws badges in the powershell sprite editor" />
                 <img src="editor2.png" alt="an image of the pokemon red protagonist in the powershell sprite editor" />
+                <video controls autoplay>
+                    <source src="/images/corn.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
             <p>To open the viewer run <code>./PwshViewer.ps1</code></p>
             <p>This will start a PowerShell web server and open a page showing all of the images in the sprites folder. There is a problem with ctrl-c being caught in the terminal so sometimes you need to close the window to stop the web server. I think using a background job would stop this occurring but I haven't tried it yet.</p>
