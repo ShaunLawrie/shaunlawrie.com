@@ -18,7 +18,7 @@
         --theme-foreground-color: #ffffff;
         --theme-dim-foreground-color: #666666;
         --theme-background-color: rgb(9, 16, 34);
-        --theme-primary-background-color: rgba(0, 0, 0, 0.2);
+        --theme-primary-background-color: rgba(0, 0, 0, 0.7);
         --theme-social-color-filter: sepia(1) brightness(0.4) hue-rotate(207deg) saturate(1800%);
     }
 }
@@ -118,7 +118,7 @@ ul li p {
     background-color: var(--theme-primary-color-image);
 }
 
-code {
+code, pre {
     color: var(--theme-primary-color);
     font-size: 1.3rem;
     border-radius: 0.3rem;
