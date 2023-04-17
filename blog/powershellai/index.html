@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Shaun Lawrie - PowerShell AI Function Builder</title>
+        <meta name="color-scheme" content="dark light">
+        <meta name="description" content="powershell shaun lawrie artificial intellegence powershellai">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="icon" type="image/png" href="/blog/powershellai/thumb.png" />
+        <meta property="og:title" content="AI Function Builder" />
+        <meta property="og:site_name" content="shaunlawrie.com" />
+        <meta property="og:url" content="https://shaunlawrie.com/blog/powershellai/" />
+        <meta property="og:description" content="Drawing Pokemon in the pwsh terminal" />
+        <meta property="og:image" content="https://shaunlawrie.com/blog/powershellai/social.png" />
+        <meta property="og:type" content="article" />
+        <meta property="article:author" content="Shaun Lawrie" />
+        <style>
+            #check-list li {
+                margin-top: 0.5rem;
+                list-style-type: none;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>
+                AI Function Builder
+            </h1>
+            <p>
+                &#8592; <a class="homelink" href="/">Home</a>
+            </p>
+            <p class="highlight">
+                The code is available on GitHub <a href="https://github.com/dfinke/PowerShellAI">dfinke/PowerShellAI</a>
+            </p>
+
+            <h2>Summary</h2>
+            <p>
+                AIFunctionBuilder takes a prompt from the user and generates a PowerShell function which is validated for syntax and logical issues so you don't have to do the boring work.
+            </p>
+            <h3>Getting Started</h3>
+            <ol>
+                <li>Watch the video below for a summary of what the module can do.</li>
+                <li>The function builder comes with PowerShell AI which can be installed in a PowerShell terminal with the command <code>Install-Module PowerShellAI</code></li>
+                <li>To launch the function builder just enter the command <code>Invoke-AIFunctionBuilder</code> with no parameters.</li>
+            </ol>
+            <div class="centered">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/5EYWw9gbQAU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+
+            <h2>How it Works</h2>
+            <p>I've spent a bit of time spent going back-and-forth between ChatGPT and other LLM tooling to validate any output that's more complicated than a one-liner.</p>
+            <p>The approach I've built here is an experiment that uses an automated feedback loop to iterate on the initial script the LLM produces so I don't have to muck around fixing the obvious issues. By utilizing PSScriptAnalyzer and the PowerShell Abstract Syntax Tree (AST) to parse the script and check for the common signs of hallucination the script can be validated to a degree that should provide much better reliability on the first execution.</p> 
+            <p>The script is not executed until the user reviews it because blindly executing code can cause some damage (think: write me a script to clean up space on my harddrive).</p>                
+            <p>I chose to focus this solution on "functions" instead of PowerShell code in a general sense because they're relatively easy to reason about, they generally take parameters and return values. Realistically this is producing a single-function module but as seen in the video above it can also produce multi-function modules occasionally.</p>
+            <p>When models can consume more context you will be able to tell the model to take most of the checks I've detailed below into consideration before it spits out some code but realistically these GPT models are predicting a stream of words and are very general purpose, there will always be parsers in the mix because they have the upper hand when it comes to validating the correctness of any output.</p>
+            <p>This is a rough view of the algorithm in the function builder and some of the syntax validations performed to make the LLM generate a decent quality output:</p>
+            <ul id="check-list" class="styled-list">
+                <li>🧠 Ask the LLM to try write a function to meet my requirements.</li>
+                <li>✅ No missing parentheses, brackets, unclosed strings etc.</li>
+                <li>✅ Commands are available.</li>
+                <li>✅ Parameters used in the script are correct for each commandlet.</li>
+                <li>✅ No ambiguous unnamed parameters are used.</li>
+                <li>✅ No named parameters are being used multiple times on the same command.</li>
+                <li>✅ At least one parameter set is satisfied by the parameters provided to the commandlet by the LLM.</li>
+                <li>✅ Types used by New-Object/Add-Type are real and resolvable.</li>
+                <li>✅ All .NET static methods used exist and have the correct number of parameters passed to them.</li>
+                <li>✅ All .NET constructors have the correct number of parameters passed to them.</li>
+                <li>✅ All .NET static properties used exist.</li>
+                <li>🧠 Ask the LLM "given the prompt {A} does the function {B} meet all requirements? If not, fix the logical issues".</li>
+                <li>➰ Repeat the above checks until no syntax issues or logical failures are present.</li>
+            </ul>
+            <p>
+                &#8592; <a class="homelink" href="/">Home</a>
+            </p>
+        </main>
+    </body>
+</html>
