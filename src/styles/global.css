@@ -4,7 +4,8 @@
 
 @layer base {
   html {
-    @apply bg-gray-900 text-gray-300;
+    background-color: #0b0c14;
+    @apply text-gray-300;
   }
   h1 {
     @apply text-3xl mb-6;
