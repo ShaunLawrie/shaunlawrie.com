@@ -14,11 +14,6 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageShown } = 
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
 			.hero-image {
 				width: 100%;
 			}
@@ -29,8 +24,7 @@ const { title, description, pubDate, updatedDate, heroImage, heroImageShown } = 
 				box-shadow: var(--box-shadow);
 			}
 			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
+				max-width: calc(100%);
 				margin: auto;
 				padding: 1em;
 				color: rgb(var(--gray-dark));

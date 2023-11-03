@@ -19,7 +19,13 @@
   p {
     @apply mb-2;
   }
+
   main {
     @apply m-8 max-w-screen-2xl mx-auto px-10;
   }
-}   
+  @media (max-width: 720px) {
+		main {
+      @apply m-4 mx-auto px-8;
+    }
+	}
+}
