@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-3xl mb-6;
+  }
+  h2 {
+    @apply text-2xl mb-4 mt-10;
+  }
+  h3 {
+    @apply text-lg mt-6;
+  }
+  p {
+    @apply mb-2;
+  }
+  main {
+    @apply m-8 max-w-screen-2xl mx-auto px-10;
+  }
+}   

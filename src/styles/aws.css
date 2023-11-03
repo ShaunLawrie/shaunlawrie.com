@@ -1,0 +1,58 @@
+.bar {
+    height: 3rem;
+    border-radius: 10rem;
+    background: rgba(0, 0, 0, 0.5);
+    margin: 0.3rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 5px;
+}
+#timeline div {
+    font-size: 1.2rem;
+    flex-grow: 2;
+    padding-left: 0.8rem;
+}
+.flexcontainer {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.icon {
+    margin: 0.6rem 0 0.5rem 1rem;
+    height: 1.95rem;
+}
+#rackspace {
+    background: linear-gradient(to right, #ffffff, #ffd2d2);
+    flex-grow: 2;
+}
+
+#aws {
+    background: linear-gradient(to right, #ffffff, #fddac3);
+    flex-grow: 7;
+}
+#gcp {
+    background: linear-gradient(to right, #ffffff, #b9b9b9);
+    width: 37.5%;
+}
+#azure {
+    background: linear-gradient(to right, #ffffff, #b0d0ff);
+    width: 12.5%;
+}
+#notes {
+    display: flex;
+    justify-content: center;
+}
+#notes a {
+    margin: 1rem;
+    text-align: center;
+}
+#notes img {
+    border-radius: 6px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+}
+#notes a:hover {
+    filter: brightness(120%);
+}
+#study-notes-heading {
+    margin-top: -3.8rem;
+}
