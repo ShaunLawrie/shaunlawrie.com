@@ -26,12 +26,12 @@ const posts = (await getCollection('blog')).sort(
 			</p>
 			<section class="mx-auto">
 				<h2>Articles</h2>
-				<ul class="content-center grid grid-cols-2">
+				<ul class="content-center grid">
 					{
 						posts.map((post) => (
 							<li class="mx-6 my-4">
 								<a href={`/blog/${post.slug}/`}>
-									<div class="max-h-72 overflow-hidden rounded-lg">
+									<div class="panel max-h-72 overflow-hidden rounded-lg mb-2">
 										<img width="100%" src={post.data.heroImage} alt="" />
 									</div>
 									<div class="flex justify-between pr-1">
@@ -53,3 +53,13 @@ const posts = (await getCollection('blog')).sort(
 		<Footer />
 	</body>
 </html>
+<style>
+.content-center {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 720px) {
+	.content-center {
+		grid-template-columns: repeat(1, minmax(0, 1fr));
+	}
+}
+</style>
