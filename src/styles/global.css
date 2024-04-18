@@ -25,6 +25,9 @@
   main {
     @apply m-8 max-w-screen-2xl mx-auto px-10;
   }
+  hr {
+    border-color: #221b33;
+  }
   @media (max-width: 720px) {
 		main {
       @apply m-3 mx-auto px-3;
