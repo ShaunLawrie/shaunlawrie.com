@@ -1,0 +1,3 @@
+article img, article video {
+    @apply p-6;
+}

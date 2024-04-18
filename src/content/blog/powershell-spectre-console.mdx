@@ -1,0 +1,200 @@
+---
+title: 'Spectre Console for PowerShell'
+description: 'A PowerShell wrapper for the awesome Spectre Console .NET library.'
+pubDate: 'Feb 09 2024'
+heroImage: '/spectre/thumb.png'
+socialImage: '/spectre/webpreview.png'
+---
+
+import GitHubLink from '../../components/GitHubLink.astro';
+import '../../styles/blog.css'
+
+I've written a PowerShell wrapper for the awesome [Spectre.Console](https://spectreconsole.net/). Spectre Console is a .NET libary that makes it easier to create beautiful console applications.  
+
+This module can make it easier for you to use Spectre.Console in PowerShell scripts! Check out https://pwshspectreconsole.com/ for the documentation or read below to find out more about why and how I did this.
+
+If you're already familiar with PowerShell you can install it from PowerShell Gallery with:  
+```powershell
+Install-Module "PwshSpectreConsole" -Scope CurrentUser
+```
+
+<br/>
+✨ With PwshSpectreConsole you can easily build themed tables, menus, render emoji, figlet fonts and more like this example:
+<div class="text-center">
+    <video class="inline-block" controls autoplay loop poster="/spectre/preview.png" >
+        <source src="/spectre/spectredemo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<GitHubLink href="https://github.com/ShaunLawrie/PwshSpectreConsole,https://github.com/ShaunLawrie/PwshEc2Tools" />
+
+## Why I made This
+
+I love PowerShell but I'm not a huge fan of the built-in Terminal UI features. I spent a lot of time in my early PowerShell days writing code to make my scripts look nicer before I thought, "why re-invent this wheel, surely there's already a C# library that does all the heavy lifting".
+
+Enter, Spectre Console. Spectre Console is a .NET library that makes it easy to create beautiful console applications.
+
+😔 Unfortunately it's not so great if you're trying to use it from a PowerShell script.
+
+The library heavily uses async methods and uses a fluent API design which works really well in C# but it doesn't translate well to a nice PowerShell experience.
+
+I wrote this wrapper so I didn't have to deal with these issues and then I decided it might be useful for others too so I published it on PSGallery. It's now got over a thousand downloads which is pretty cool so I guess some others have found it useful too!
+
+Below I've detailed some of the painful parts of using .NET libraries from PowerShell and how I've made it easier to use this specific one with PwshSpectreConsole.
+
+## Examples of the Pains of Async C# / PowerShell Interop
+
+Spectre Console uses a fluent API design which results in nice and easy to read code in C#. You create an object and call a method on it, then another method, then another method, and so on. Fluent API calls/method chains look like:  
+`thingThatsAnObject().Method1("arg1").Method2("arg2").Method3("arg3")`  
+
+You'll see this type of code a lot with builders, factories, and other object creation patterns in C# where you take an initial object and then iteratively update it.
+
+In C# if you wanted to start a Spectre Console [SelectionPrompt](https://spectreconsole.net/prompts/selection) to ask the user a question you would write something like this:
+
+```csharp
+var fruit = AnsiConsole.Prompt(
+    new SelectionPrompt<string>()
+        .Title("What's your [green]favorite fruit[/]?")
+        .PageSize(10)
+        .MoreChoicesText("[grey](Move up and down to reveal more fruits)[/]")
+        .AddChoices(new[] {
+            "Apple", "Apricot", "Avocado", 
+            "Banana", "Blackcurrant", "Blueberry",
+            "Cherry", "Cloudberry", "Cocunut",
+        }));
+
+AnsiConsole.WriteLine($"I agree. {fruit} is tasty!");
+```
+<br/>
+In PowerShell, you can't use `.method().chaining()` because half of the functions are C# extension methods which cannot be called in the same way from PowerShell, and the other half are properties which cannot be accessed by magic getter and setter methods. These are C# language features that get worked out by the C# compiler. Because our PowerShell isn't using that same compiler we don't get all the benefits but we can still access the functionality with some workarounds.
+
+### Extension Methods
+
+For extension methods you need to call the extension method like it's a static method on the SelectionPromptExtensions class using the `[full.namespace.to.extensionclass]::ExtensionMethodName()` syntax instead of `$object.ExtensionMethodName()`.  
+ 
+If you [look at the method signature](https://github.com/spectreconsole/spectre.console/blob/b21e07ea94543d33a6323523f2802944650d894d/src/Spectre.Console/Prompts/SelectionPromptExtensions.cs#L34) of an extension method you'll see that the first parameter is the object to call the method on. In PowerShell we need to provide this as the first parameter to the method explicitly.  
+
+You will also see in the method linked above that the method returns the original object provided as that first parameter. In C# this allows for method chaining but in PowerShell we need to discard it because our original object will have been mutated by the call to the extension method and we have no need for another reference to that same object as we can't call extension methods on it directly.
+
+```powershell
+# ❌ Doesn't work
+$spectrePrompt.AddChoices(@("a", "b", "c"))
+# ✅ Works and returns the original object but we throw it away with Out-Null
+[Spectre.Console.SelectionPromptExtensions]::AddChoices($spectrePrompt, @("a", "b", "c")) | Out-Null
+```
+
+### Property Setters
+
+For [Spectre Console properties like Title](https://github.com/spectreconsole/spectre.console/blob/b21e07ea94543d33a6323523f2802944650d894d/src/Spectre.Console/Prompts/SelectionPrompt.cs#L15) in C# you can call magic setters and getters by using the property name as a method e.g. `Title()` but this does not work in PowerShell. You have to treat it like any other PowerShell property and set it with the `=` operator.  
+
+```powershell
+# ❌ Doesn't work
+$spectrePrompt.Title("What's your [green]favorite fruit[/]?")
+# ✅ Works
+$spectrePrompt.Title = "What's your [green]favorite fruit[/]?"
+```
+
+### Async Methods
+
+An easy way to call Spectre Console methods is to just invoke the prompt with `Show()` which is the synchronous way of showing the prompt. While this works, it blocks the whole terminal while the prompt is shown so only the Spectre Console inputs work. Things like `ctrl-c` to exit the prompt and other commands you could usually send to the terminal do nothing.  
+
+To allow ctrl-c to work the prompt can be invoked with `ShowAsync()` which is an async version of the same function. If we call the function by itself the prompt will display, but not properly. Without using something like C#'s `await` keyword the script moves on and continues executing without ever receiving the user's selection.  
+
+We can use a loop to simulate `await` and continuously check for the task to be complete, the task will be complete when the user has selected an option. This doesn't account for the `ctrl-c` scenario though, if you press `ctrl-c` it will kill the script but the prompt will still be displayed and if you create a new Spectre Console prompt it will end up with multiple corrupt prompts on the screen because your old tasks are still running in the background corrupting your terminal window content.   
+
+Finally to address the `ctrl-c` issue we can create a `CancellationTokenSource` and pass the `Token` to the `ShowAsync()` method so that we can cancel the task if we want to exit the prompt early. When you use `ctrl-c` in a PowerShell `try {} finally {}` block, the finally block always executes so we can call the `Cancel()` method on the cancellation token to tear down the background task cleanly.  
+
+Here's a few examples of how you might try to use the sync/async methods in PowerShell and why they don't work followed by the only solution I know works reliably:
+
+```powershell
+# ❌ Doesn't work, it stops ctrl-c from working
+$fruit = $spectrePrompt.Show([Spectre.Console.AnsiConsole]::Console)
+
+# ❌ Doesn't work, it doesn't wait for the user to select an option
+$cancellationTokenSource = [System.Threading.CancellationTokenSource]::new()
+$fruit = $spectrePrompt.ShowAsync([Spectre.Console.AnsiConsole]::Console,
+                                  $cancellationTokenSource.Token)
+
+# ❌ Doesn't work, it stops ctrl-c from working
+$cancellationTokenSource = [System.Threading.CancellationTokenSource]::new()
+$fruit = $spectrePrompt.ShowAsync([Spectre.Console.AnsiConsole]::Console,
+                                  $cancellationTokenSource.Token).GetAwaiter().GetResult()
+
+# ✅ Works but it's messy
+$cancellationTokenSource = [System.Threading.CancellationTokenSource]::new()
+$fruit = $null
+try {
+    $task = $spectrePrompt.ShowAsync([Spectre.Console.AnsiConsole]::Console, $cancellationTokenSource.Token)
+    # Wait 200ms on the task to be complete in a tight loop, anything above 0 works without causing high CPU
+    while (-not $task.AsyncWaitHandle.WaitOne(200)) {
+        # do nothing
+    }
+    $fruit = $task.GetAwaiter().GetResult()
+} finally {
+    $cancellationTokenSource.Cancel()
+    $task.Dispose()
+}
+```
+
+## The Result
+
+For the full version of the pretty C# Spectre Console code above. If you take into consideration the differences in extension methods and property setters in PowerShell you would have to write something like this every time you want to use Spectre Console:
+
+```powershell
+# Manually load the DLLs required by spectre console
+Add-Type -Path '.\path\to\Spectre.Console\lib\netstandard2.0\Spectre.Console.dll', 
+# Create a prompt object to start setting up
+$spectrePrompt = [Spectre.Console.SelectionPrompt[string]]::new()
+# Set all the properties on the prompt object
+$spectrePrompt.Title = "What's your [green]favorite fruit[/]?"
+$spectrePrompt.PageSize = 10
+$spectrePrompt.MoreChoicesText = "[grey](Move up and down to reveal more fruits)[/]"
+# Call all the required extension methods on the prompt object
+$spectrePrompt = [Spectre.Console.SelectionPromptExtensions]::AddChoices($spectrePrompt, [string[]]@(
+    "Apple", "Apricot", "Avocado", 
+    "Banana", "Blackcurrant", "Blueberry",
+    "Cherry", "Cloudberry", "Cocunut"
+))
+# Replicate the logic provided by "AnsiConsole.Prompt()" so that ctrl-c interrupts work
+$cancellationTokenSource = [System.Threading.CancellationTokenSource]::new()
+$fruit = $null
+try {
+    $task = $spectrePrompt.ShowAsync([Spectre.Console.AnsiConsole]::Console, $cancellationTokenSource.Token)
+    while (-not $task.AsyncWaitHandle.WaitOne(200)) {
+        # HACK: Waiting in a tight loop like this allows ctrl-c interrupts to work as expected
+        # I would love to know if there's a better way but I couldn't find one
+    }
+    # Get the value returned from the async task
+    $fruit = $task.GetAwaiter().GetResult()
+} finally {
+    # Always manually cancel the task so background workers are cleaned up
+    $cancellationTokenSource.Cancel()
+    $task.Dispose()
+}
+
+Write-Host "I agree. $fruit is tasty!"
+```
+<br/>
+And that's just for the selection prompt! If you want to use any other Spectre Console features like tables, progress bars, or spinners you would have to write similar boilerplate code after digging through the Spectre Console source code to get it to work in PowerShell.
+
+Now that's a handful to write every time you just want to ask a user something simple so I've made it easier to use Spectre Console from PowerShell by abstracting away all of the painful configuration so you can use a syntax more familiar to PowerShell users.
+
+The example above in PwshSpectreConsole would become:
+
+```powershell
+Import-Module "PwshSpectreConsole"
+
+$fruit = Read-SpectreSelection -Title "What's your [green]favorite fruit[/]?" -PageSize 10 -Choices @(
+    "Apple", "Apricot", "Avocado", 
+    "Banana", "Blackcurrant", "Blueberry",
+    "Cherry", "Cloudberry", "Cocunut"
+)
+
+Write-Host "I agree. $fruit is tasty!"
+```
+<br/>
+
+👉🏻 Check out the documentation at [https://pwshspectreconsole.com/](https://pwshspectreconsole.com/) for more examples and how to use the module.
+
+<a href="https://pwshspectreconsole.com/"><img src="/spectre/webpreview.png" alt="a preview of pwshspectreconsole.com" /></a>

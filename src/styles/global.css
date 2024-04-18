@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background-color: #0b0a0c;
+    @apply text-gray-300;
+  }
+  h1 {
+    @apply text-3xl mb-6;
+  }
+  h2 {
+    @apply text-2xl mb-4 mt-10;
+  }
+  h3 {
+    @apply text-lg mt-6;
+  }
+  p {
+    @apply mb-2;
+  }
+  article a {
+    @apply underline;
+  }
+  main {
+    @apply m-8 max-w-screen-2xl mx-auto px-10;
+  }
+  @media (max-width: 720px) {
+		main {
+      @apply m-3 mx-auto px-3;
+    }
+	}
+  .pixelated {
+    image-rendering: pixelated;
+  }
+}
+
+.astro-code {
+  @apply border border-gray-600 rounded-md p-4;
+  background-color: #1f1f1f!important;
+}
+
+code {
+  color: #cacaff;
+  border: solid 1px #1f1f1f;
+  border-radius: 0.2em;
+  word-break: break-all;
+}

@@ -1,0 +1,38 @@
+---
+title: 'PwshSprites'
+description: 'A way to draw pixel art in PowerShell.'
+pubDate: 'Sep 01 2022'
+heroImage: '/pwshsprites/thumb-pixelated-2.png'
+socialImage: '/pwshsprites/social.png'
+---
+
+import GitHubLink from '../../components/GitHubLink.astro';
+import '../../styles/blog.css'
+
+<GitHubLink href="https://github.com/ShaunLawrie/PwshPaint">ShaunLawrie/PwshPaint</GitHubLink>
+
+While procrastinating about setting up this blog I wanted to create a favicon in a pixel art style. Instead of creating the icon I got carried away spaghetti coding a pixel art editor for the terminal in PowerShell...  
+
+<div class="text-center">
+    <video class="inline-block" controls autoplay poster="/pwshsprites/preview.png" >
+        <source src="/pwshsprites/corn.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+To open the editor run <code>./PwshEditor.ps1</code>  
+For <a href="https://news.ycombinator.com/reply?id=33010477&goto=item%3Fid%3D33008834%2333010477">those who like vim</a> run <code>./SpriteEditor.ps1 -AppSettingsPath "appsettings.vim.json"</code>  
+The editor controls are all indicated in the UI apart from pressing [SPACE] to draw pixels and arrow keys to move.  
+Snake mode will make the pen or eraser constantly apply changes as you navigate the canvas.  
+
+<div id="editor-container" class="flex justify-around">
+    <img class="w-1/2" src="/pwshsprites/editor1.png" alt="an image of some aws badges in the powershell sprite editor" />
+    <img class="w-1/2" src="/pwshsprites/editor2.png" alt="an image of the pokemon red protagonist in the powershell sprite editor" />
+</div>
+
+To open the viewer run <code>./PwshViewer.ps1</code>  
+This will start a PowerShell web server and open a page showing all of the images in the sprites folder. There is a problem with ctrl-c being caught in the terminal so sometimes you need to close the window to stop the web server. I think using a background job would stop this occurring but I haven't tried it yet.
+
+<div class="centered">
+    <img src="/pwshsprites/viewer.png" alt="an image of the powershell sprite viewer" />
+</div>
