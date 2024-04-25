@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    background-color: #0b0a0c;
+    background-color: #111011;
     @apply text-gray-300;
   }
   h1 {
